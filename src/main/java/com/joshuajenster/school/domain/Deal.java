@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductCatalog {
+public class Deal {
 
     @Id
     @GeneratedValue
@@ -24,15 +23,15 @@ public class ProductCatalog {
 
 
     @OneToMany(cascade = javax.persistence.CascadeType.ALL)
-    private List<Product> products = new ArrayList<>();
+    private List<Person> products = new ArrayList<>();
 
 
-    public void add(Product p) {
+    public void add(Person p) {
         products.add(p);
     }
 
-    public Product find(Long id) {
-        for(Product p : products) {
+    public Person find(Long id) {
+        for(Person p : products) {
             if(p.getId() == id)
                 return p;
         }
