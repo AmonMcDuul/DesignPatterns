@@ -4,11 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,24 +14,25 @@ import java.util.List;
 @NoArgsConstructor
 public class Deal {
 
+    public Deal(int value, Date endDate, Date startDate, List<Person> persons) {
+        this.value = value;
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.persons = persons;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
 
+    private int value;
 
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL)
-    private List<Person> products = new ArrayList<>();
+    private Date endDate;
+
+    private Date startDate;
+
+    @OneToMany
+    private List<Person> persons;
 
 
-    public void add(Person p) {
-        products.add(p);
-    }
-
-    public Person find(Long id) {
-        for(Person p : products) {
-            if(p.getId() == id)
-                return p;
-        }
-        return null;
-    }
 }
