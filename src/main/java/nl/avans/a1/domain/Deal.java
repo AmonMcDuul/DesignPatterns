@@ -1,4 +1,4 @@
-package com.joshuajenster.school.domain;
+package nl.avans.a1.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
