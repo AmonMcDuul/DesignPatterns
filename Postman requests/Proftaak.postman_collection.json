@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "94863d2d-c3a6-4e47-92b3-cc5c4323b0a8",
+		"name": "Proftaak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "notities",
+			"item": [
+				{
+					"name": "overzicht notities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/note/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"note",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "individueel note",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/note/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"note",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Note Aanmaken",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"derde notitie\",\n    \"description\": \"Lorem ipsum blablabalnlabdaskdjaljkdnalksdmaklsdm alkdma lkmaskld m\\nmsdflkmsdklfdsmflksdmdfsmkfmsdlkfmslkfmsdlkmfskdlmfskdmfksmdfksdm\\n\",\n    \"date\": \"2019-01-18T23:42:30\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/note/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"note",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserStuff",
+			"item": [
+				{
+					"name": "PostRequest inloggen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "username",
+								"value": "bobvdvalk",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "12345",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"username\": \"john\",\n    \"password\": \"12345\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
