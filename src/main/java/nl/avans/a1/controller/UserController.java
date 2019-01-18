@@ -6,10 +6,9 @@ import nl.avans.a1.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("user")
@@ -30,5 +29,17 @@ public class UserController {
         } else {
             throw new UserNotFoundException("User not found");
         }
+    }
+
+    /**
+     * Toevoegen van nieuwe user
+     * @param user data van user in json formaat, spring regelt de rest
+     * @return de nieuwe toegevoegde user
+     * todo: fix bug dat password leeg blijft bij toevoegen via een postrequest, ligt waarschijnlijk aan JsonIgnore annotation
+     */
+    @PostMapping(value = "add", consumes = "application/json")
+    public Optional<User> addUser(@RequestBody User user) {
+        userRepository.save(user);
+        return userRepository.findById(user.getId());
     }
 }
