@@ -2,12 +2,14 @@ package nl.avans.a1.business;
 
 import nl.avans.a1.domain.Person;
 
-public class MessageService {
+public abstract class MessageService {
 
-    public void sendMessage(Person person, String message, MessageType platform) {
-        MessageFactory messageFactory = new MessageFactory();
-        Message sender = messageFactory.getMessageImplementation(platform);
-        sender.create(message);
-        sender.send(person);
+    public void send(Person person, String message, String title) {
+        createMessage(person, message, title);
+        sendMessage();
     }
+
+    abstract void sendMessage();
+
+    abstract void createMessage(Person person, String message, String title);
 }
