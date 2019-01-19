@@ -1,8 +1,10 @@
 package nl.avans.a1;
 
 import nl.avans.a1.domain.Note;
+import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.User;
 import nl.avans.a1.repository.NoteRepository;
+import nl.avans.a1.repository.PersonRepository;
 import nl.avans.a1.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,9 @@ public class SchoolApplication implements CommandLineRunner {
 
 	@Autowired
 	private NoteRepository noteRepository;
+
+	@Autowired
+	private PersonRepository personRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchoolApplication.class, args);
@@ -69,5 +74,11 @@ public class SchoolApplication implements CommandLineRunner {
 		bob.setPassword("12345");
 
 		userRepository.save(bob);
+
+
+		Person joshPerson = new Person();
+		joshPerson.setName("Joshua");
+
+		personRepository.save(joshPerson);
 	}
 }

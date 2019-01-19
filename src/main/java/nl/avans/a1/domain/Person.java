@@ -26,8 +26,8 @@ public class Person {
     @ManyToOne
     private Deal deal;
 
-    public void sendMessage(String message, String title, String channel) {
-        MessageServiceFactory.getMessageImplementation(channel).send(this, message, title);
+    public void sendMessage(PersonMessage message) {
+        MessageServiceFactory.getMessageImplementation(MessageType.valueOf(message.getChannel().toUpperCase())).send(this, message.message, message.title);
     }
 
 }
