@@ -23,11 +23,13 @@ public class Person {
 
     private String email;
 
+    private String slackId;
+
     @ManyToOne
     private Deal deal;
 
-    public void sendMessage(PersonMessage message) {
-        MessageServiceFactory.getMessageImplementation(MessageType.valueOf(message.getChannel().toUpperCase())).send(this, message.message, message.title);
+    public boolean sendMessage(PersonMessage message) {
+        return MessageServiceFactory.getMessageImplementation(MessageType.valueOf(message.getChannel().toUpperCase())).send(this, message.message, message.title);
     }
 
 }

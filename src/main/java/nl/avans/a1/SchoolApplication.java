@@ -1,5 +1,6 @@
 package nl.avans.a1;
 
+import net.bytebuddy.asm.Advice;
 import nl.avans.a1.domain.Note;
 import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.User;
@@ -34,6 +35,7 @@ public class SchoolApplication implements CommandLineRunner {
 
 	@Autowired
 	private PersonRepository personRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchoolApplication.class, args);

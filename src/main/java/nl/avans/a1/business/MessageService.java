@@ -4,12 +4,12 @@ import nl.avans.a1.domain.Person;
 
 public abstract class MessageService {
 
-    public void send(Person person, String message, String title) {
+    public boolean send(Person person, String message, String title) {
         createMessage(person, message, title);
-        sendMessage();
+        return sendMessage();
     }
 
-    abstract void sendMessage();
+    abstract boolean sendMessage();
 
     abstract void createMessage(Person person, String message, String title);
 }
