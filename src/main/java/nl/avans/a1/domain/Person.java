@@ -25,9 +25,6 @@ public class Person {
 
     private String slackId;
 
-    @ManyToOne
-    private Deal deal;
-
     public boolean sendMessage(PersonMessage message) {
         return MessageServiceFactory.getMessageImplementation(MessageType.valueOf(message.getChannel().toUpperCase())).send(this, message.message, message.title);
     }

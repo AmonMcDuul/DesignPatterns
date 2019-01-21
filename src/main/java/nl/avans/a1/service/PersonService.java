@@ -32,18 +32,9 @@ public class PersonService {
         }
     }
 
-    public Person editPerson(Person personToUpdate, Person newPerson, long id) {
-
-        if(personToUpdate != null) {
-            personToUpdate.setName(newPerson.getName());
-            personToUpdate.setEmail(newPerson.getEmail());
-            personToUpdate.setDeal(newPerson.getDeal());
-            personToUpdate.setSlackId(newPerson.getSlackId());
-            return personRepository.save(personToUpdate);
-        } else {
-            newPerson.setId(id);
-            return personRepository.save(newPerson);
-        }
+    public Person editPerson(Person newPerson, long id) {
+        newPerson.setId(id);
+        return personRepository.save(newPerson);
     }
 
 }

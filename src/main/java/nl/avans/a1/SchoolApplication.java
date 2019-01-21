@@ -1,9 +1,11 @@
 package nl.avans.a1;
 
 import net.bytebuddy.asm.Advice;
+import nl.avans.a1.domain.Deal;
 import nl.avans.a1.domain.Note;
 import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.User;
+import nl.avans.a1.repository.DealRepository;
 import nl.avans.a1.repository.NoteRepository;
 import nl.avans.a1.repository.PersonRepository;
 import nl.avans.a1.repository.UserRepository;
@@ -35,6 +37,10 @@ public class SchoolApplication implements CommandLineRunner {
 
 	@Autowired
 	private PersonRepository personRepository;
+
+	@Autowired
+	private DealRepository dealRepository;
+
 
 
 	public static void main(String[] args) {
@@ -77,10 +83,17 @@ public class SchoolApplication implements CommandLineRunner {
 
 		userRepository.save(bob);
 
+		Deal deal = new Deal();
 
 		Person joshPerson = new Person();
 		joshPerson.setName("Joshua");
 
+		dealRepository.save(deal);
+
+		deal.addPerson(joshPerson);
+
 		personRepository.save(joshPerson);
+
+		dealRepository.save(deal);
 	}
 }

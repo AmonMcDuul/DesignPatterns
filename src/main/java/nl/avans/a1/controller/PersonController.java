@@ -1,6 +1,7 @@
 package nl.avans.a1.controller;
 
 
+import nl.avans.a1.domain.Deal;
 import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.PersonMessage;
 import nl.avans.a1.domain.ResponseObject;
@@ -38,7 +39,7 @@ public class PersonController {
 
     @PutMapping(value = "/{id}", consumes = "application/json")
     public Person editPerson(@PathVariable long id, @RequestBody Person person) {
-        return personService.editPerson(personRepository.findById(id).get(), person, id);
+        return personService.editPerson(person, id);
     }
 
     @DeleteMapping("/{id}")
