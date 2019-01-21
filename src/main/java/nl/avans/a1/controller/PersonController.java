@@ -1,7 +1,5 @@
 package nl.avans.a1.controller;
 
-
-import nl.avans.a1.domain.Deal;
 import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.PersonMessage;
 import nl.avans.a1.domain.ResponseObject;
