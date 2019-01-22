@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,13 +35,24 @@ public class Deal {
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Note> notes = new ArrayList<>();
 
-
+    @Transactional
     public void addPerson(Person p) {
         getPersons().add(p);
     }
 
+    @Transactional
     public void addNote(Note n) {
         getNotes().add(n);
+    }
+
+    @Transactional
+    public void deletePerson(Person p) {
+        getPersons().remove(p);
+    }
+
+    @Transactional
+    public void deleteNote(Note n) {
+        getNotes().remove(n);
     }
 
 

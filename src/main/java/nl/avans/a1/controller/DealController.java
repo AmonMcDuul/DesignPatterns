@@ -1,10 +1,8 @@
 package nl.avans.a1.controller;
 
-import nl.avans.a1.domain.Deal;
-import nl.avans.a1.domain.Person;
-import nl.avans.a1.domain.PersonMessage;
-import nl.avans.a1.domain.ResponseObject;
+import nl.avans.a1.domain.*;
 import nl.avans.a1.repository.DealRepository;
+import nl.avans.a1.repository.NoteRepository;
 import nl.avans.a1.repository.PersonRepository;
 import nl.avans.a1.service.PersonService;
 import org.slf4j.Logger;
@@ -30,6 +28,9 @@ public class DealController {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    NoteRepository noteRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
 
@@ -70,10 +71,8 @@ public class DealController {
                 HttpStatus.NOT_FOUND, "Deal not found"));
     }
 
-    /**
-     * ALL THE PERSONS ENDPOINTS BELOW
-     * @param id
-     * @return
+    /*
+        ALL THE PERSON ENDPOINTS BELOW
      */
 
     @GetMapping("/{id}/persons")
@@ -102,6 +101,43 @@ public class DealController {
             return personRepository.findById(personId).map(person -> {
                     deal.getPersons().remove(person);
                     dealRepository.save(deal);
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }).orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Person not found"));
+        }).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Deal not found"));
+    }
+
+    /*
+        ALL THE NOTE ENDPOINTS BELOW
+     */
+
+    @GetMapping("/{id}/notes")
+    public ResponseEntity<List<Note>> getNotesOfDeal(@PathVariable long id) {
+        return dealRepository.findById(id).map(deal -> new ResponseEntity<>(deal.getNotes(), HttpStatus.OK)).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Deal not found"));
+    }
+
+    @PostMapping("/{dealId}/notes/{noteId}")
+    public ResponseEntity<List<Note>> addNoteToDeal(@PathVariable("dealId") long dealId, @PathVariable("noteId") long noteId ) {
+        return dealRepository.findById(dealId).map(deal -> {
+            return noteRepository.findById(noteId).map(note -> {
+                if(deal.getNotes().contains(note))
+                    return new ResponseEntity<>(deal.getNotes(), HttpStatus.CREATED);
+                deal.addNote(note);
+                return new ResponseEntity<>(deal.getNotes(), HttpStatus.CREATED);
+            }).orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Note not found"));
+        }).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Deal not found"));
+    }
+
+    @DeleteMapping("/{dealId}/notes/{noteId}")
+    public ResponseEntity<?> deleteNoteFromDeal(@PathVariable("dealId") long dealId, @PathVariable("noteId") long noteId ) {
+        return dealRepository.findById(dealId).map(deal -> {
+            return noteRepository.findById(noteId).map(note -> {
+                deal.getNotes().remove(note);
+                dealRepository.save(deal);
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }).orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Person not found"));
