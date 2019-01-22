@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -27,36 +29,41 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("")
-    public Iterable<Person> getAllPersons() {
+    public ResponseEntity<Iterable<Person>> getAllPersons() {
         LOG.info("get all Persons called");
-        return personRepository.findAll();
+        return new ResponseEntity<>(personRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Person getPerson(@PathVariable Long id) {
+    public ResponseEntity<Person> getPerson(@PathVariable Long id) {
         LOG.info("get Person called");
-        return personRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
+        return personRepository.findById(id).map(person -> {
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        }).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Person not found"));
     }
 
     @PostMapping("")
-    public Person addPerson(@RequestBody Person person) {
+    public ResponseEntity<Person> addPerson(@Valid @RequestBody Person person) {
         LOG.info("add Person called");
-        return personRepository.save(person);
+        return new ResponseEntity<>(personRepository.save(person), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json")
-    public Person editPerson(@PathVariable long id, @RequestBody Person person) {
+    public ResponseEntity<Person> editPerson(@PathVariable long id, @RequestBody Person person) {
         LOG.info("edit Person called on id: "+id);
-        return personService.editPerson(person, id);
+        return new ResponseEntity<>(personService.editPerson(person, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-
-    public void deletePerson(@PathVariable long id) {
+    public ResponseEntity<?> deletePerson(@PathVariable long id) {
         LOG.info("delete Person called on id: "+id);
-        if(personRepository.findById(id).isPresent())
+
+        return personRepository.findById(id).map(person -> {
             personRepository.deleteById(id);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Person not found"));
     }
 
     @PostMapping(value = "/{id}/sendmessage", consumes = "application/json", produces = "application/json")
