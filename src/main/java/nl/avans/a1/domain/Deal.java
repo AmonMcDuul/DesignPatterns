@@ -1,5 +1,6 @@
 package nl.avans.a1.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,22 +29,11 @@ public class Deal {
     private Date startDate;
 
     @OneToMany
-    private List<Person> persons;
+    private List<Person> persons = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Note> notes;
+    private List<Note> notes = new ArrayList<>();
 
-    public List<Person> getPersons() {
-        if(persons == null)
-            persons = new ArrayList<>();
-        return persons;
-    }
-
-    public List<Note> getNotes() {
-        if(notes == null)
-            notes = new ArrayList<>();
-        return notes;
-    }
 
     public void addPerson(Person p) {
         getPersons().add(p);
