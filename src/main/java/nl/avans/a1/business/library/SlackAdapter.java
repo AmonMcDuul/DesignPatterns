@@ -1,13 +1,20 @@
 package nl.avans.a1.business.library;
 
-public final class SlackAdapter {
+import nl.avans.a1.business.Notifier;
 
-    public static boolean sendSlackMessage(String slackId, String message) {
+public final class SlackAdapter implements Notifier {
+
+    public static boolean sendSlackMessage(String slackEmail, String message) {
         /*
             aanspreken microservice API om een slack message te sturen
          */
-        System.out.println("Sending message to slack ID: "+slackId+", message: "+message);
+        System.out.println("Sending message to slack ID: "+slackEmail+", message: "+message);
 
         return true;
+    }
+
+    @Override
+    public void notify(String receiver, String message) {
+        SlackAdapter.sendSlackMessage(receiver, message);
     }
 }

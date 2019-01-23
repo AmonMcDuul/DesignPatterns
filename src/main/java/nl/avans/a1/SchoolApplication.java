@@ -1,6 +1,9 @@
 package nl.avans.a1;
 
 import net.bytebuddy.asm.Advice;
+import nl.avans.a1.business.NoteObserver;
+import nl.avans.a1.business.library.EmailAdapter;
+import nl.avans.a1.business.library.SlackAdapter;
 import nl.avans.a1.domain.Deal;
 import nl.avans.a1.domain.Note;
 import nl.avans.a1.domain.Person;
@@ -41,7 +44,8 @@ public class SchoolApplication implements CommandLineRunner {
 	@Autowired
 	private DealRepository dealRepository;
 
-
+	@Autowired
+	private NoteObserver noteObserver;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchoolApplication.class, args);
@@ -49,8 +53,11 @@ public class SchoolApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		LOG.info("save demo content");
+		LOG.info("listeners toevoegen");
+		noteObserver.addListener(new EmailAdapter());
+		noteObserver.addListener(new SlackAdapter());
 
+		LOG.info("save demo content");
 		//NOTE DEMO DATA
 		Note note = new Note();
 		note.setTitle("eerste notitie");

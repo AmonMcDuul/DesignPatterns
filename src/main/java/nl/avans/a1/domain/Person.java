@@ -25,7 +25,7 @@ public class Person {
 
     private String email;
 
-    private String slackId;
+    private String slackEmail;
 
     public boolean sendMessage(PersonMessage message) {
         return MessageServiceFactory.getMessageImplementation(MessageType.valueOf(message.getChannel().toUpperCase())).send(this, message.message, message.title);

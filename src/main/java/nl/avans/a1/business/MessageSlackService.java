@@ -11,8 +11,8 @@ public class MessageSlackService extends MessageService {
 
     @Override
     boolean sendMessage() {
-        if(person.getSlackId() != null)
-            return SlackAdapter.sendSlackMessage(person.getSlackId(), message);
+        if(person.getSlackEmail() != null)
+            return SlackAdapter.sendSlackMessage(person.getSlackEmail(), message);
         else
             return false;
     }
