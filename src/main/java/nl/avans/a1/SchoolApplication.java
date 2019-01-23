@@ -1,8 +1,16 @@
 package nl.avans.a1;
 
+import net.bytebuddy.asm.Advice;
+import nl.avans.a1.business.NoteObserver;
+import nl.avans.a1.business.library.EmailAdapter;
+import nl.avans.a1.business.library.SlackAdapter;
+import nl.avans.a1.domain.Deal;
 import nl.avans.a1.domain.Note;
+import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.User;
+import nl.avans.a1.repository.DealRepository;
 import nl.avans.a1.repository.NoteRepository;
+import nl.avans.a1.repository.PersonRepository;
 import nl.avans.a1.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +38,26 @@ public class SchoolApplication implements CommandLineRunner {
 	@Autowired
 	private NoteRepository noteRepository;
 
+	@Autowired
+	private PersonRepository personRepository;
+
+	@Autowired
+	private DealRepository dealRepository;
+
+	@Autowired
+	private NoteObserver noteObserver;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SchoolApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		LOG.info("save demo content");
+		LOG.info("listeners toevoegen");
+		noteObserver.addListener(new EmailAdapter());
+		noteObserver.addListener(new SlackAdapter());
 
+		LOG.info("save demo content");
 		//NOTE DEMO DATA
 		Note note = new Note();
 		note.setTitle("eerste notitie");
@@ -69,5 +89,18 @@ public class SchoolApplication implements CommandLineRunner {
 		bob.setPassword("12345");
 
 		userRepository.save(bob);
+
+		Deal deal = new Deal();
+
+		Person joshPerson = new Person();
+		joshPerson.setName("Joshua");
+
+		dealRepository.save(deal);
+
+		deal.addPerson(joshPerson);
+
+		personRepository.save(joshPerson);
+
+		dealRepository.save(deal);
 	}
 }

@@ -2,12 +2,12 @@ package nl.avans.a1.business;
 
 public class MessageServiceFactory {
 
-    public static MessageService getMessageImplementation(String channel) {
-        if(channel.equals("email")) {
+    public static MessageService getMessageImplementation(MessageType channel) {
+        if(channel.equals(MessageType.EMAIL)) {
             return new MessageEmailService();
         }
 
-        if (channel.equals("slack")) {
+        if (channel.equals(MessageType.SLACK)) {
             return new MessageSlackService();
         }
 

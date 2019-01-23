@@ -15,6 +15,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Person {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,11 +25,10 @@ public class Person {
 
     private String email;
 
-    @ManyToOne
-    private Deal deal;
+    private String slackEmail;
 
-    public void sendMessage(String message, String title, String channel) {
-        MessageServiceFactory.getMessageImplementation(channel).send(this, message, title);
+    public boolean sendMessage(PersonMessage message) {
+        return MessageServiceFactory.getMessageImplementation(MessageType.valueOf(message.getChannel().toUpperCase())).send(this, message.message, message.title);
     }
 
 }
