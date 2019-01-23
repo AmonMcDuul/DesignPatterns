@@ -1,13 +1,11 @@
 package nl.avans.a1;
 
-import net.bytebuddy.asm.Advice;
 import nl.avans.a1.business.NoteObserver;
 import nl.avans.a1.business.library.EmailAdapter;
 import nl.avans.a1.business.library.SlackAdapter;
 import nl.avans.a1.domain.Deal;
 import nl.avans.a1.domain.Note;
 import nl.avans.a1.domain.Person;
-import nl.avans.a1.domain.User;
 import nl.avans.a1.repository.DealRepository;
 import nl.avans.a1.repository.NoteRepository;
 import nl.avans.a1.repository.PersonRepository;
@@ -20,7 +18,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Dit is voor de proftaak van groep A1 van de Avans Informatica Deeltijd jaar 3
