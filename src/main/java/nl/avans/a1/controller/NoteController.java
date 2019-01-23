@@ -29,8 +29,7 @@ public class NoteController {
     }
 
     @PostMapping(value = "add", consumes = "application/json")
-    public Optional<Note> addNewNote(@Valid @RequestBody Note note) {
-        noteRepository.save(note);
-        return noteRepository.findById(note.getId());
+    public ResponseEntity<Note> addNewNote(@Valid @RequestBody Note note) {
+        return new ResponseEntity<>(noteRepository.save(note), HttpStatus.CREATED);
     }
 }
