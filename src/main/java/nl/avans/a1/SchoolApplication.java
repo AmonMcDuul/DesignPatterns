@@ -9,7 +9,6 @@ import nl.avans.a1.domain.Person;
 import nl.avans.a1.repository.DealRepository;
 import nl.avans.a1.repository.NoteRepository;
 import nl.avans.a1.repository.PersonRepository;
-import nl.avans.a1.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ import java.time.LocalDateTime;
 public class SchoolApplication implements CommandLineRunner {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SchoolApplication.class);
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private NoteRepository noteRepository;
@@ -71,21 +67,6 @@ public class SchoolApplication implements CommandLineRunner {
 		noteRepository.save(note);
 		noteRepository.save(note2);
 
-
-		//USER DEMO DATA
-		User joshua = new User();
-		joshua.setName("Joshua Jenster");
-		joshua.setUsername("jjenster");
-		joshua.setPassword("12345");
-
-		userRepository.save(joshua);
-
-		User bob = new User();
-		bob.setName("Bob van der Valk");
-		bob.setUsername("bobvdvalk");
-		bob.setPassword("12345");
-
-		userRepository.save(bob);
 
 		Deal deal = new Deal();
 
