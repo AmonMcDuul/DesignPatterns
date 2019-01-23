@@ -2,7 +2,6 @@ package nl.avans.a1.controller;
 
 import nl.avans.a1.domain.Person;
 import nl.avans.a1.domain.PersonMessage;
-import nl.avans.a1.domain.ResponseObject;
 import nl.avans.a1.repository.PersonRepository;
 import nl.avans.a1.service.PersonService;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("person")
@@ -46,6 +44,7 @@ public class PersonController {
     @PostMapping("")
     public ResponseEntity<Person> addPerson(@Valid @RequestBody Person person) {
         LOG.info("add Person called");
+        person.setId(null);
         return new ResponseEntity<>(personRepository.save(person), HttpStatus.CREATED);
     }
 
@@ -67,12 +66,12 @@ public class PersonController {
     }
 
     @PostMapping(value = "/{id}/sendmessage", consumes = "application/json", produces = "application/json")
-    public ResponseObject sendMessage(@PathVariable long id, @RequestBody PersonMessage message) {
+    public ResponseEntity<?> sendMessage(@PathVariable long id, @RequestBody PersonMessage message) {
         LOG.info("sendMessage Person called on id: "+id);
 
         Person p = personRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Person not found"));
 
-        return personService.sendMessage(p, message);
+        return personService.sendMessage(p, message)== true ? new ResponseEntity<>(null, HttpStatus.I_AM_A_TEAPOT) : new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

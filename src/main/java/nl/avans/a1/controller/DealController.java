@@ -53,6 +53,7 @@ public class DealController {
 
     @PostMapping("")
     public ResponseEntity<Deal> addDeal(@Valid @RequestBody Deal deal) {
+        deal.setId(null);
         return new ResponseEntity<>(dealRepository.save(deal), HttpStatus.CREATED);
     }
 
