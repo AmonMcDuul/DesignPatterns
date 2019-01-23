@@ -1,9 +1,17 @@
 version: '3.3'
 
 services:
+  proftaak:
+    image: school:0.0.1-SNAPSHOT
+    ports:
+      - 0080:8080
+    depends_on:
+      - mysql
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/messagedb?verifyServerCertificate=false&useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
   mysql:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: messagedb
-    network_mode: host
