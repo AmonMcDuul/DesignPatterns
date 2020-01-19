@@ -6,6 +6,8 @@ public abstract class MessageService {
 
     public boolean send(Person person, String message, String title) {
         createMessage(person, message, title);
+        Logger logger = Logger.getInstance();
+        logger.noteLogger(person.toString(), message, title);
         return sendMessage();
     }
 
