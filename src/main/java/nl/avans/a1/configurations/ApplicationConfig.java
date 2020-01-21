@@ -1,4 +1,4 @@
-package nl.avans.a1;
+package nl.avans.a1.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
