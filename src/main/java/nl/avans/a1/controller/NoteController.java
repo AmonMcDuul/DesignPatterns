@@ -6,9 +6,11 @@ import nl.avans.a1.domain.Note;
 import nl.avans.a1.domain.NoteType;
 import nl.avans.a1.helpers.FileHelper;
 import nl.avans.a1.repository.NoteRepository;
+import nl.avans.a1.service.NoteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,12 +32,26 @@ public class NoteController {
     @Autowired
     private NoteObserver noteObserver;
 
+    @Autowired
+    NoteService noteService;
+
     private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
 
-    @GetMapping("")
+    /*@GetMapping("")
     public ResponseEntity<Iterable<Note>> index() {
         LOG.info("get all Notes called");
         return new ResponseEntity<>(noteRepository.findAll(), HttpStatus.OK);
+    }*/
+
+    @GetMapping
+    public ResponseEntity<List<Note>> getAllEmployees(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortBy)
+    {
+        List<Note> list = noteService.getAllNotes(pageNo, pageSize, sortBy);
+
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
@@ -68,7 +85,7 @@ public class NoteController {
 
     @PostMapping("/{id}/file")
     public ResponseEntity<?> addFileToNote(@PathVariable long id,
-                                              @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+                                              @RequestParam(value = "file", required = false) MultipartFile file) {
         return noteRepository.findById(id).map(note -> {
             File converted_file = null;
             try {
