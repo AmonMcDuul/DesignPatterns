@@ -44,7 +44,7 @@ public class NoteController {
     }*/
 
     @GetMapping
-    public ResponseEntity<List<Note>> getAllEmployees(
+    public ResponseEntity<List<Note>> getAllNotes(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy)
