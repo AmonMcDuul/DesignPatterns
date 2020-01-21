@@ -8,6 +8,6 @@ public class PrivateNotifier extends NotifierDecorator {
 
     @Override
     public void notify(String receiver, String message){
-        super.notify("This message is private: "+ receiver, message);
+        super.notify(receiver, "private. " + message);
     }
 }

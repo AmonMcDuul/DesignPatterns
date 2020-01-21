@@ -8,6 +8,7 @@ public class EmailAdapter implements Notifier {
         /*
             aanspreken microservice API om een slack message te sturen
          */
+
         System.out.println("Sending email to: "+emailAddress +", subject: "+subject+", message: "+message);
 
         return true;
@@ -15,6 +16,6 @@ public class EmailAdapter implements Notifier {
 
     @Override
     public void notify(String receiver, String message) {
-        EmailAdapter.sendEmailMessage(receiver, "There is a new note!", message);
+                EmailAdapter.sendEmailMessage(receiver, "This message is: ", message);
     }
 }

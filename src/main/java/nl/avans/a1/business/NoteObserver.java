@@ -15,8 +15,17 @@ public class NoteObserver {
         }
     }
 
-    public void addListener(Notifier notifier) {
+    public void addPrivateListener(Notifier notifier) {
         notifier = new PrivateNotifier(new Notifier() {
+            @Override
+            public void notify(String receiver, String message) {
+            }
+        });
+        listeners.add(notifier);
+    }
+
+    public void addPPublicListener(Notifier notifier) {
+        notifier = new PublicNotifier(new Notifier() {
             @Override
             public void notify(String receiver, String message) {
             }
