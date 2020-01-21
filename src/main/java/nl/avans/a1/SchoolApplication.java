@@ -47,8 +47,10 @@ public class SchoolApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		LOG.info("listeners toevoegen");
-		noteObserver.addListener(new EmailAdapter());
-		noteObserver.addListener(new SlackAdapter());
+		noteObserver.addPrivateListener(new EmailAdapter());
+		noteObserver.addPrivateListener(new SlackAdapter());
+		noteObserver.addPPublicListener(new EmailAdapter());
+		noteObserver.addPPublicListener(new SlackAdapter());
 
 		LOG.info("save demo content");
 		//NOTE DEMO DATA
