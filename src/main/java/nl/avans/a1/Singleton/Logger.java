@@ -1,6 +1,7 @@
-package nl.avans.a1.business;
+package nl.avans.a1.Singleton;
 
-import javax.persistence.GenerationType;
+import nl.avans.a1.business.Notifier;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,7 +11,6 @@ import java.util.List;
 public class Logger {
 
     private static Logger logger = null;
-    private List<Notifier> listeners = new ArrayList<>();
     private final String logFile = "messages_logfile.txt";
     private PrintWriter writer;
 
@@ -28,6 +28,10 @@ public class Logger {
     }
 
     public void noteLogger (String logPerson, String logMessage, String logTitle) {
+        writer.println("Person: " + logPerson + "\nMessage: " + logMessage + "\nTitle: " + logTitle + "\n");
+    }
+
+    public void noteLogger (String logPerson, String logMessage, String logTitle, String methodOverloading) {
         writer.println("Person: " + logPerson + "\nMessage: " + logMessage + "\nTitle: " + logTitle + "\n");
     }
 }

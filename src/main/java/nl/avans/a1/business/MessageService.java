@@ -1,5 +1,6 @@
 package nl.avans.a1.business;
 
+import nl.avans.a1.Singleton.Logger;
 import nl.avans.a1.domain.Person;
 
 public abstract class MessageService {
